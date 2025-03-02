@@ -1,0 +1,4 @@
+package org.anhvt.springmaven.controller;
+
+public class IndexController {
+}
