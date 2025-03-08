@@ -1,19 +1,20 @@
 pipeline {
 	agent any
 
-	environment {
-		mavenHome = tool 'jenkins-maven'
-	}
+	// environment {
+	// 	mavenHome = toWol 'jenkins-maven'
+	// }
 
-	tools {
-		jdk 'java-17'
-	}
+	// tools {
+	// 	jdk 'java-17'
+	// }
 
 	stages {
 
-		stage('Build'){
+		stage('Compose up'){
 			steps {
-				bat "mvn clean install -DskipTests -B"
+				sh 'docker-compose up -d'     
+    			echo 'Docker-compose-build Build Image Completed'   
 			}
 		}
 
