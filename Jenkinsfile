@@ -1,20 +1,26 @@
 pipeline {
-    agent any
+	agent any
 
-    stages {
+	environment {
+		mavenHome = tool 'jenkins-maven'
+	}
 
-        stage('Manual Approval') {
-            steps {
-                script {
-                    echo 'Proceeding with the deployment...'
-                }
-            }
-        }
-    }
+	tools {
+		jdk 'java-17'
+	}
 
-    post {
-        failure {
-            echo 'Deployment failed'
-        }
-    }
+	stages {
+
+		stage('Build'){
+			steps {
+				bat "mvn clean install -DskipTests"
+			}
+		}
+
+		stage('Deploy') {
+			steps {
+			    bat "mvn jar:jar deploy:deploy"
+			}
+		}
+	}
 }
