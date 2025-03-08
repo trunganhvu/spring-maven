@@ -33,12 +33,6 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy') {
-            steps {
-                // Your deployment steps here
-            }
-        }
     }
 
     post {
