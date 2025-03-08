@@ -13,6 +13,11 @@ pipeline {
 
 		stage('Compose up'){
 			steps {
+				sh '''
+					docker version
+					docker info
+					docker compose version 
+				'''
 				sh 'docker-compose up -d'     
     			echo 'Docker-compose-build Build Image Completed'   
 			}
