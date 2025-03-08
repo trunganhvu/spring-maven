@@ -2,11 +2,6 @@ pipeline {
     agent any
 
     stages {
-        stage('Build') {
-            steps {
-                // Your build steps here
-            }
-        }
 
         stage('Manual Approval') {
             steps {
