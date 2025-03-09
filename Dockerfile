@@ -12,5 +12,5 @@ WORKDIR /app
 COPY --from=build /app/target/*.jar java-api.jar
 
 # Default spring port or configuration port in resources
-EXPOSE 8080
+EXPOSE 8081
 CMD ["java", "-jar", "java-api.jar"]
