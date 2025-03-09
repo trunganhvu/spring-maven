@@ -19,7 +19,11 @@ pipeline {
                 bat 'docker --version'
             }
         }
-
+		stage('Down containers') {
+            steps {
+                bat "docker-compose -f ${DOCKER_COMPOSE_PATH} down"
+            }
+        }
         stage('Run with Docker Compose') {
             steps {
                 bat "docker-compose -f ${DOCKER_COMPOSE_PATH} up -d --build"
