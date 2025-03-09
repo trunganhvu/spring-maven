@@ -8,12 +8,6 @@ pipeline {
     }
 
     stages {
-        stage('Clone Repository') {
-            steps {
-                git branch: 'main', url: 'https://github.com/trunganhvu/spring-maven.git'
-            }
-        }
-
 		stage('Check Docker Version') {
             steps {
                 bat 'docker --version'
