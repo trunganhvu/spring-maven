@@ -16,19 +16,19 @@ pipeline {
 
         stage('Build Maven Project') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                sh "docker build -t ${IMAGE_NAME} ."
+                bat "docker build -t ${IMAGE_NAME} ."
             }
         }
 
         stage('Run with Docker Compose') {
             steps {
-                sh "docker-compose -f ${DOCKER_COMPOSE_PATH} up -d --build"
+                bat "docker-compose -f ${DOCKER_COMPOSE_PATH} up -d --build"
             }
         }
     }
