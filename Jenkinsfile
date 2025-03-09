@@ -1,32 +1,41 @@
 pipeline {
-	agent any
+    agent any  // Chạy trên bất kỳ node nào
 
-	// environment {
-	// 	mavenHome = toWol 'jenkins-maven'
-	// }
+    environment {
+        IMAGE_NAME = "spring-maven-app"
+        CONTAINER_NAME = "spring-maven-container"
+        DOCKER_COMPOSE_PATH = "$WORKSPACE/docker-compose.yml"
+    }
 
-	// tools {
-	// 	jdk 'java-17'
-	// }
+    stages {
+        stage('Clone Repository') {
+            steps {
+                git branch: 'main', url: 'https://github.com/trunganhvu/spring-maven.git'
+            }
+        }
 
-	stages {
+        stage('Build Maven Project') {
+            steps {
+                sh 'mvn clean package -DskipTests'
+            }
+        }
 
-		stage('Compose up'){
-			steps {
-				sh '''
-					docker version
-					docker info
-					docker compose version 
-				'''
-				sh 'docker-compose up -d'     
-    			echo 'Docker-compose-build Build Image Completed'   
-			}
-		}
+        stage('Build Docker Image') {
+            steps {
+                sh "docker build -t ${IMAGE_NAME} ."
+            }
+        }
 
-		// stage('Deploy') {
-		// 	steps {
-		// 	    bat "mvn jar:jar deploy:deploy"
-		// 	}
-		// }
-	}
+        stage('Run with Docker Compose') {
+            steps {
+                sh "docker-compose -f ${DOCKER_COMPOSE_PATH} up -d --build"
+            }
+        }
+    }
+
+    post {
+        always {
+            echo "Pipeline finished"
+        }
+    }
 }
