@@ -14,15 +14,9 @@ pipeline {
             }
         }
 
-        stage('Build Maven Project') {
+		stage('Check Docker Version') {
             steps {
-                bat 'mvn clean package -DskipTests'
-            }
-        }
-
-        stage('Build Docker Image') {
-            steps {
-                bat "docker build -t ${IMAGE_NAME} ."
+                bat 'docker --version'
             }
         }
 
